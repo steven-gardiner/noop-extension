@@ -65,7 +65,7 @@ function startup(data,reason) {
     boot.windows = [];
     boot.emit = function(doc, eventType) {
       var evt = doc.createEvent("CustomEvent");
-      evt.initCustomEvent(eventType, true, false, {});
+      evt.initCustomEvent(eventType, true, false, {extname:extname});
       doc.dispatchEvent(evt);    
     };
     boot.require = function(module) {
