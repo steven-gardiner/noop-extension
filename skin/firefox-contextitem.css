@@ -1,0 +1,7 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#noop-contextitem {
+  list-style-image: url(chrome://noop/skin/icons/hi.png) !important;
+  -color: blue;
+  -font-weight: bold !important;
+}
