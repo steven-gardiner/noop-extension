@@ -49,6 +49,11 @@
     <xsl:text> classic/1.0  </xsl:text>
     <xsl:text>skin/        </xsl:text>
     <xsl:text>&#10;</xsl:text>
+    <xsl:text>locale       </xsl:text>
+    <xsl:value-of select="$extname"/>
+    <xsl:text> en-US        </xsl:text>
+    <xsl:text>locale/en-US/</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template match="/|*|@*|text()|node()" priority="-100">
