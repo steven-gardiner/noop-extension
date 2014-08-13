@@ -2,41 +2,38 @@
 "use strict";
 
 (function() {
-  var env = window.env || {};
-  env.widget_prefix = env.widget_prefix || (env.extname + "-") || "";
-  env.event_prefix = env.event_prefix || (env.extname + "-") || "";
-  env.event_ns = env.event_ns || ("." + env.extname) || "";
 
-  var cleanup = [];
+  component.contextitemComponent = function(spec, doc, env) {
+    spec = spec || {};
+    spec.localid = spec.localid || "contextitem";
 
-  jQuery(document).on('insert-mozilla-ui' + env.event_ns, function(event) {
-    var menuitem = document.createElement("menuitem");
+    var self = new component(spec, doc, env);
 
-    //jQuery(button).text('foo');
-    jQuery(menuitem).attr('label', 'foobar2');
-    jQuery(menuitem).attr('id', env.widget_prefix + 'contextitem');
-    jQuery(menuitem).addClass('extension-contextitem');
+    self.insertUI = function(spec) {      
 
-    jQuery("#contentAreaContextMenu").append(menuitem);
-    cleanup.push(function() { jQuery(menuitem).detach(); });
+      self.menuitem = self.document.createElement("menuitem");
 
-    jQuery(menuitem).on('click', function(event) {
-      var gcm = gContextMenu;
-      var outgoing = env.event_prefix + 'context-click';
-      document.dispatchEvent(new CustomEvent(outgoing, {bubbles:true,detail:{originalEvent:event,context:gcm}}));            
-    });
+      //jQuery(button).text('foo');
+      jQuery(self.menuitem).attr('label', self.getString("contextitem.label"));
+      jQuery(self.menuitem).attr('id', self.auid);
+      jQuery(self.menuitem).addClass('extension-contextitem');
 
-    var detail = {"stylesheet": "firefox-contextitem.css"};
-    document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:detail}));           
-  });
+      jQuery("#contentAreaContextMenu").append(self.menuitem);
+      self.cleanup.push(function() { jQuery(self.menuitem).detach(); });
 
-  jQuery(document).on('cleanup-mozilla-ui' + env.event_ns, function(event) {
-    cleanup.forEach(function(cleaner) {
-      cleaner.call(null);
-    });
+      jQuery(self.menuitem).on('click', function(event) {
+        var gcm = gContextMenu;
+        self.document.dispatchEvent(new CustomEvent(self.getEventName('context-click'), 
+                                                    {bubbles:true,detail:{originalEvent:event,context:gcm}}));            
+      });
 
-    if (env.event_ns !== '') {
-      jQuery(document).off(env.event_ns);
-    }
-  });
+      var out = {"stylesheet": "firefox-contextitem.css",extname: self.env.extname};
+      self.document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:out}));           
+    };
+
+    self.init();
+
+    return self;
+  };
+
 }());

@@ -1,40 +1,35 @@
 
-"use strict";
 
 (function() {
-  var env = window.env || {};
-  env.widget_prefix = env.widget_prefix || (env.extname + "-") || "";
-  env.event_prefix = env.event_prefix || (env.extname + "-") || "";
-  env.event_ns = env.event_ns || ("." + env.extname) || "";
+  "use strict";
 
-  var cleanup = [];
+  component.buttonComponent = function(spec, doc, env) {
+    spec = spec || {};
+    spec.localid = spec.localid || "button";
 
-  jQuery(document).on('insert-mozilla-ui' + env.event_ns, function(event) {
-    var button = document.createElement("toolbarbutton");
+    var self = new component(spec, doc, env);
 
-    //jQuery(button).text('foo');
-    jQuery(button).attr('id', env.widget_prefix + 'button');
-    jQuery(button).addClass('extension-button');
+    self.insertUI = function(spec) {
+      self.button = self.document.createElement("toolbarbutton");
+      
+      //jQuery(button).text('foo');
+      jQuery(self.button).attr('id', self.auid);
+      jQuery(self.button).attr('tooltiptext', self.getString([self.auid,"tooltip"].join(".")));
+      jQuery(self.button).addClass('extension-button');
+      
+      jQuery("#nav-bar-customization-target").append(self.button);
+      self.cleanup.push(function() { jQuery(self.button).detach(); });
+      
+      jQuery(self.button).on('click', function(event) {
+        self.button.dispatchEvent(new CustomEvent(self.getEventName("click"), {bubbles:true,detail:{originalEvent:event}}));      
+      });
 
-    jQuery("#nav-bar-customization-target").append(button);
-    cleanup.push(function() { jQuery(button).detach(); });
+      self.document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:{"stylesheet": "firefox-button.css",extname: self.env.extname}}));           
+    };
 
-    jQuery(button).on('click', function(event) {
-      var outgoing = env.event_prefix + 'button-click';
-      button.dispatchEvent(new CustomEvent(outgoing, {bubbles:true,detail:{originalEvent:event}}));      
-    });
+    self.init();
 
-    var detail = {"stylesheet": "firefox-button.css"};
-    document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:detail}));           
-  });
+    return self;
+  };
 
-  jQuery(document).on('cleanup-mozilla-ui' + env.event_ns, function(event) {
-    cleanup.forEach(function(cleaner) {
-      cleaner.call(null);
-    });
-
-    if (env.event_ns !== '') {
-      jQuery(document).off(env.event_ns);
-    }
-  });
 }());
