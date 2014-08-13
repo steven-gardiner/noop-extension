@@ -1,5 +1,5 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 #noop-button {
-  list-style-image: url(chrome://noop/skin/icons/hi.png);
+  list-style-image: url(chrome://noop/skin/icons/null16.png);
 }
