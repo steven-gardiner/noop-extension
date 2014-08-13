@@ -6,8 +6,8 @@ Components.utils.import("resource://gre/modules/AddonManager.jsm");
 var boot = {};
 boot.onOpenWindow = function(aWindow) {
   let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);  
-  domWindow.onLoad = function listener() {
-    domWindow.removeEventListener("load", domWindow.onLoad, false);
+  boot.onLoad = function listener() {
+    domWindow.removeEventListener("load", boot.onLoad, false);
 
       // If this is a browser window then setup its UI
     if (domWindow.document.documentElement.getAttribute("windowtype") == "navigator:browser") {
@@ -23,7 +23,7 @@ boot.onOpenWindow = function(aWindow) {
     }
         
   };
-  domWindow.addEventListener("load", domWindow.onLoad, false);
+  domWindow.addEventListener("load", boot.onLoad, false);
 };
 boot.onCloseWindow = function(aWindow) { };
 boot.onWindowTitleChange = function() { };
@@ -89,6 +89,9 @@ function startup(data,reason) {
     };
     boot.handleStylesheet = function(event,detail) {
       detail = detail || event.detail || (event.originalEvent && event.originalEvent.detail);
+      if (detail.extname && (detail.extname !== extname)) {
+        return true;
+      }
       boot.injectStylesheet(detail.stylesheet);
     };
     boot.injectModules = function(window) {
