@@ -11,3 +11,6 @@ install.rdf: meta.xsl
 
 chrome.manifest: meta.xsl
 	echo "<chrome.manifest/>" | xsltproc $< - > $@
+
+content/js/firefox-components.js: content/js/firefox-component.js content/js/firefox-button.js content/js/firefox-contextitem.js content/js/firefox-pagewatcher.js
+	cat $^ > $@
