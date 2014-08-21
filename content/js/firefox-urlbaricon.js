@@ -5,7 +5,7 @@
 
   component.urlbariconComponent = function(spec, doc, env) {
     spec = spec || {};
-    spec.localid = spec.localid || "contextitem";
+    spec.localid = spec.localid || "urlbaricon";
 
     var self = new component(spec, doc, env);
 
