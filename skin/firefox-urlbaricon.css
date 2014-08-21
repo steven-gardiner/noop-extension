@@ -1,0 +1,5 @@
+#noop-urlbaricon {
+  list-style-image: url(chrome://noop/skin/icons/null16.png);
+  opacity: 0.2;
+}
+
