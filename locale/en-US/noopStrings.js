@@ -1,4 +1,4 @@
 var strings = {};
 
-strings["contextitem.label"] = "BUZZ!!";
-strings["button.tooltip"] = "BIZZ!!";
+strings["noop-contextitem.label"] = "BUZZ!!";
+strings["noop-button.tooltip"] = "BIZZ!!";
