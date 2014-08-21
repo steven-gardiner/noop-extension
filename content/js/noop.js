@@ -3,6 +3,8 @@ var button2 = new component.buttonComponent({localid:"button2"});
 var contextitem1 = new component.contextitemComponent({localid:"contextitem"});
 var pagewatcher = new component.pagewatcherComponent({localid:"pagewatcher"});
 
+var urlbaricon = new component.urlbariconComponent({localid:"urlbaricon"});
+
 jQuery(document).on('noop-button-click.noop', function(event, detail) {
   var detail = detail || event.detail || (event.originalEvent && event.originalEvent.detail);
 
@@ -22,6 +24,11 @@ jQuery(document).on('noop-pagewatcher-load.noop', function(event, detail) {
   var detail = detail || event.detail || (event.originalEvent && event.originalEvent.detail);
 
   console.log('NEW PAGE ' + detail.foo);
+});
+jQuery(document).on('noop-urlbaricon-click.noop', function(event, detail) {
+  var detail = detail || event.detail || (event.originalEvent && event.originalEvent.detail);
+
+  console.log('URLBAR ' + detail.foo);
 });
 
 jQuery(document).on('cleanup-mozilla-ui.noop', function(event) {
