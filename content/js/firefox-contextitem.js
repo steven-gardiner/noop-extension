@@ -14,7 +14,7 @@
       self.menuitem = self.document.createElement("menuitem");
 
       //jQuery(button).text('foo');
-      jQuery(self.menuitem).attr('label', self.getString("contextitem.label"));
+      jQuery(self.menuitem).attr('label', self.getString([self.auid,"label"].join(".")));
       jQuery(self.menuitem).attr('id', self.auid);
       jQuery(self.menuitem).addClass('extension-contextitem');
 
