@@ -8,6 +8,8 @@ var component = function(spec, doc, env) {
 
   var self = {};
 
+  self.spec = spec;
+
   self.localid = spec.localid || "component";
   self.document = doc;
   self.env = env;
@@ -18,6 +20,10 @@ var component = function(spec, doc, env) {
   env.event_ns = env.event_ns || ("." + env.extname) || "";
 
   self.cleanup = [];
+
+  self.toggleClass = function() {
+    // noop by default;
+  };
 
   self.getString = function(key) {
     // return a localized string within the extension

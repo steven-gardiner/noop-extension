@@ -7,7 +7,7 @@
     spec = spec || {};
     spec.localid = spec.localid || "urlbaricon";
 
-    var self = new component(spec, doc, env);
+    var self = new component(spec, doc, env);    
 
     self.insertUI = function(spec) {
 
@@ -15,6 +15,14 @@
  
       jQuery(self.icon).attr('id', self.auid);
       jQuery(self.icon).attr('tooltiptext', self.getString([self.auid,"tooltip"].join(".")));
+      if (self.spec && self.spec.css) {
+        jQuery(self.icon).css(self.spec.css);
+      }
+      if (self.spec && self.spec.classes) {
+        self.spec.classes.forEach(function(className) {
+          jQuery(self.icon).addClass(className);
+        });
+      }
 
       jQuery('#urlbar-icons').append(self.icon);
       self.cleanup.push(function() { jQuery(self.icon).detach(); });
@@ -27,6 +35,10 @@
       var out = {"stylesheet": "firefox-urlbaricon.css",extname: self.env.extname};
       self.document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:out}));                 
       
+    };
+
+    self.toggleClass = function(classes, onoff) {
+      jQuery(self.icon).toggleClass(classes, onoff);
     };
 
     self.init();
