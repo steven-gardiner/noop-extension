@@ -24,6 +24,16 @@ var component = function(spec, doc, env) {
   self.toggleClass = function() {
     // noop by default;
   };
+  self.on = function(eventName, handler, spec) {
+    spec = spec || {};
+    spec.eventName = eventName;
+    spec.handler = handler;
+    self.listeners.push(spec);
+  };
+  self.listeners = [];
+  self.addListener = function(spec) {
+    // noop by default;
+  };
 
   self.getString = function(key) {
     // return a localized string within the extension
@@ -47,6 +57,10 @@ var component = function(spec, doc, env) {
     return name;
   };
 
+  self.resolveURL = function(suffix) {
+    return ["chrome://",env.extname,suffix].join("");
+  };
+
   self.cleanupUI = function(spec) {
     self.cleanup.forEach(function(cleaner) {
       cleaner.call(null);
@@ -64,6 +78,9 @@ var component = function(spec, doc, env) {
     }
 
     self.insertUI();
+    self.listeners.forEach(function(listener) {
+        self.addListener(listener);
+    });
   };
 
   self.cleanupHandler = function(event,detail) {

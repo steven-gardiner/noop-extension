@@ -10,6 +10,7 @@
     var self = new component(spec, doc, env);
 
     self.insertUI = function(spec) {
+      console.log("INSERTUI");
       self.button = self.document.createElement("toolbarbutton");
       
       //jQuery(button).text('foo');
@@ -22,9 +23,15 @@
       
       jQuery(self.button).on('click', function(event) {
         self.button.dispatchEvent(new CustomEvent(self.getEventName("click"), {bubbles:true,detail:{originalEvent:event}}));      
+        return true;
       });
 
       self.document.dispatchEvent(new CustomEvent('register-stylesheet', {detail:{"stylesheet": "firefox-button.css",extname: self.env.extname}}));           
+    };
+
+    self.addListener = function(spec) {
+      console.log("BUT LISTEN: " + JSON.stringify(spec));
+      jQuery(self.button).on(spec.eventName, spec.handler);
     };
 
     self.init();
