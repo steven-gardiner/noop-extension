@@ -1,0 +1,15 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* reverse direction of browser box */
+.noop-sidebar-showing hbox#browser {
+  direction: rtl;
+}
+
+ /* don't let the children inherit this change */
+.noop-sidebar-showing hbox#browser > vbox {
+  direction: ltr;
+}
+
+.noop-sidebar-showing #sidebar {
+  max-width: none !important; 
+}
