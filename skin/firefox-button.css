@@ -2,4 +2,9 @@
 
 #noop-button {
   list-style-image: url(chrome://noop/skin/icons/null16.png);
+  opacity: 0.5;
+}
+
+.noop-sidebar-showing #noop-button {
+  opacity: 0.2;
 }
