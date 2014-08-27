@@ -7,5 +7,6 @@ require("/content/js/firefox-button.js");
 require("/content/js/firefox-contextitem.js");
 require("/content/js/firefox-pagewatcher.js");
 require("/content/js/firefox-urlbaricon.js");
+require("/content/js/firefox-sidebar.js");
 
 require('/content/js/noop.js');
