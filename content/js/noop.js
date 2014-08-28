@@ -5,7 +5,14 @@ var pagewatcher = new component.pagewatcherComponent({localid:"pagewatcher"});
 
 var urlbaricon = new component.urlbariconComponent({localid:"urlbaricon"});
 
-var sidebar = new component.sidebarComponent({shortcut:{key:'k'}});
+var keystroke1 = new component.keystrokeComponent({key:'k'});
+var sidebar = new component.sidebarComponent({shortcut:keystroke1.auid}); //{shortcut:{key:'k'}});
+
+jQuery(document).on('noop-keystroke-command.noop', function(event, detail) {
+  console.log("KEY!");
+
+  sidebar.toggle();
+});
 
 button1.on('click', function(event, detail) {
   console.log('NOOP BUTTON1!!');

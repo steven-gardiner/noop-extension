@@ -26,26 +26,8 @@
       self.menuitem = self.document.createElement("menuitem");
 
       jQuery(self.menuitem).attr('id', [self.auid,'sidebarmenuitem'].join("."));
-      jQuery(self.menuitem).attr('key', [self.auid,'sidebarkey'].join("."));
+      jQuery(self.menuitem).attr('key', self.shortcut);
       jQuery(self.menuitem).attr('observes', self.auid);
-
-      if (self.shortcut && self.shortcut.key) {
-        self.shortcut.modifiers = self.shortcut.modifiers || 'shift accel';
-
-        self.key = self.document.createElement("key");
-        jQuery(self.key).attr('id', [self.auid,'sidebarkey'].join("."));
-        jQuery(self.key).attr('key', self.shortcut.key);
-        jQuery(self.key).attr('modifiers', self.shortcut.modifiers);
-
-        jQuery(self.key).attr('oncommand', 'return true');
-
-        jQuery(self.key).on('command', function() {
-          jQuery(self.menuitem).trigger('command');
-        });
-
-        jQuery("#mainKeyset").append(self.key);
-        self.cleanup.push(function() { jQuery(self.key).detach(); });      
-      }
 
       jQuery(self.menuitem).on('command', function(event, detail) {
         var detail = detail || event.detail || (event.originalEvent && event.originalEvent.detail) || {};  
@@ -89,6 +71,12 @@
 
     self.show = function(spec) {
       jQuery(self.menuitem).trigger("command", {show:true});
+    };
+    self.hide = function(spec) {
+      jQuery(self.menuitem).trigger("command", {show:false});
+    };
+    self.toggle = function(spec) {
+      jQuery(self.menuitem).trigger("command");
     };
 
     self.addListener = function(spec) {
